@@ -30,25 +30,29 @@ struct ContentView: View {
     var body: some View {
         NavigationStack{
             Form {
-                VStack (alignment: .leading, spacing: 0) {
+                Section {
                     Text("When do we want to wake up")
                         .font(.headline)
                     DatePicker("Please enter a time", selection: $wakeUp, displayedComponents: .hourAndMinute)
                         .labelsHidden()
                 }
                 
-               
-                VStack(alignment: .leading, spacing: 0)  {
+                Section  {
                     Text("Desired amount of sleep")
                         .font(.headline)
                     
                     Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
                 }
-                VStack(alignment: .leading, spacing: 0)  {
+                
+                Section {
                     Text("Daily coffee intake")
                         .font(.headline)
                     
-                    Stepper("[\(coffeeAmount) cup](inflect: true)", value: $coffeeAmount, in: 1...20)
+                    Picker("^[\(coffeeAmount) cup](inflect: true)", selection: $coffeeAmount) {
+                        ForEach(1..<20, id:\.self){ index in
+                            Text(index, format: .number)
+                        }
+                    }
                 }
                 
                
